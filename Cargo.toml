@@ -5,3 +5,7 @@ members = [
     "heliosphere-core",
     "heliosphere-signer",
 ]
+
+[workspace.dependencies]
+heliosphere-core = { path = "./heliosphere-core" }
+heliosphere-signer = { path = "./heliosphere-signer" }

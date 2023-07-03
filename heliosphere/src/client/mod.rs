@@ -93,9 +93,13 @@ impl RpcClient {
         P: Serialize,
         R: DeserializeOwned,
     {
+        let method_url = self
+            .rpc_url
+            .join(method)
+            .map_err(|err| crate::Error::ApiError(format!("Invalid method url: {err}")))?;
         Ok(self
             .client
-            .post(&format!("{}/{}", self.rpc_url, method))
+            .post(method_url.as_str())
             .json(payload)
             .send()
             .await?
@@ -108,9 +112,13 @@ impl RpcClient {
     where
         R: DeserializeOwned,
     {
+        let method_url = self
+            .rpc_url
+            .join(method)
+            .map_err(|err| crate::Error::ApiError(format!("Invalid method url: {err}")))?;
         Ok(self
             .client
-            .get(&format!("{}/{}", self.rpc_url, method))
+            .get(method_url.as_str())
             .send()
             .await?
             .json()
